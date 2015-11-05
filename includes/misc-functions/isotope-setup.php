@@ -71,20 +71,12 @@ function mp_stacks_eventgrid_isotope_filter_groups(){
 	
 	//This array can contain custom groups (for outside sources like instgram), AND/OR WordPress taxonomy slugs.			
 	$isotope_filter_groups = array( 
-		'category' => array( 
+		'mp_calendars' => array( 
 			'is_wordpress_taxonomy' => true,
-			'filter_group_name' => __( 'Categories', 'mp_stacks_eventgrid' ),
+			'filter_group_name' => __( 'Calendars', 'mp_stacks_eventgrid' ),
 			'meta_field_ids_representing_tax_term' => array(
-				'category' => array()
+				'mp_calendars' => array()
 			),
-			//Icon info
-			'default_icon_font_string' => 'fa-th-large', //A default icon-font class string to use if no unique icon is given
-			'default_icon_image_url' => plugins_url( '/assets/images/user-icon.png', dirname( dirname( __FILE__ ) ) ), //A default url to use if no unique icon is given
-		),
-		'post_tag' => array(
-			'is_wordpress_taxonomy' => true,
-			'filter_group_name' => __( 'Post Tags', 'mp_stacks_eventgrid' ),
-			'meta_field_ids_representing_tax_term' => array(),
 			//Icon info
 			'default_icon_font_string' => 'fa-th-large', //A default icon-font class string to use if no unique icon is given
 			'default_icon_image_url' => plugins_url( '/assets/images/user-icon.png', dirname( dirname( __FILE__ ) ) ), //A default url to use if no unique icon is given
@@ -116,23 +108,3 @@ function mp_stacks_eventgrid_all_icon( $isotope_icon, $meta_prefix ){
 	return 'fa-th-large';
 }
 add_filter( 'mp_stacks_grid_isotope_all_icon_font_class', 'mp_stacks_eventgrid_all_icon', 10, 2);
-
-/**
- * Add the orderby options for "Sort by Date, Most Comments" to the EventGrid Metabox
- *
- * @access   public
- * @since    1.0.0
- * @param    Void
- * @param    $orderby_options Array - Any existing orderby options
- * @param    $meta_prefix string - the meta prefix for this grid add-on
- * @return   $orderby_options Array - The newly added orderby options for this grid addon
-*/
-function mp_stacks_eventgrid_orderby_options( $orderby_options, $meta_prefix ){
-	$orderby_options['date_newest_to_oldest'] = __( 'Newest', 'mp_stacks_' . $meta_prefix );
-	$orderby_options['date_oldest_to_newest'] = __( 'Oldest', 'mp_stacks_' . $meta_prefix );
-	$orderby_options['random'] = __( 'Random', 'mp_stacks_' . $meta_prefix );
-	$orderby_options['most_comments'] = __( 'Most Comments', 'mp_stacks_' . $meta_prefix );
-	
-	return $orderby_options;
-}
-add_filter( 'eventgrid' . '_isotope_orderby_options', 'mp_stacks_eventgrid_orderby_options', 10, 2 );
