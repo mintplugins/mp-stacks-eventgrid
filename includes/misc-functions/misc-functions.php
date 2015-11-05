@@ -28,40 +28,16 @@ function mp_stacks_eventgrid_centered_by_default( $centered_content_types ){
 	
 }
 add_filter( 'mp_stacks_centered_content_types', 'mp_stacks_eventgrid_centered_by_default' );
- 
+
 /**
- * Function which returns an array of font awesome icons
- */
-function mp_stacks_eventgrid_get_font_awesome_icons(){
-	
-	//Get all font styles in the css document and put them in an array
-	$pattern = '/\.(fa-(?:\w+(?:-)?)+):before\s+{\s*content:\s*"(.+)";\s+}/';
-	//$subject = file_get_contents( plugins_url( '/fonts/font-awesome-4.0.3/css/font-awesome.css', dirname( __FILE__ ) ) );
-	
-	$args = array(
-		'timeout'     => 5,
-		'redirection' => 5,
-		'httpversion' => '1.0',
-		'blocking'    => true,
-		'headers'     => array(),
-		'cookies'     => array(),
-		'body'        => null,
-		'compress'    => false,
-		'decompress'  => true,
-		'sslverify'   => false,
-		'stream'      => false,
-		'filename'    => null
-	); 
+* Change the mp_events url slug from "events" to "mp-events" so that the user can have a page called "events" without it changing to "events-2".
+*/
+function mp_stacks_eventgrid_mp_events_slug( $args ) {
 
-	$response = wp_remote_retrieve_body( wp_remote_get( plugins_url( '/fonts/font-awesome-4.0.3/css/font-awesome.css', dirname( __FILE__ ) ), $args ) );
+	// Arguments
+	$args['rewrite']['slug'] = 'mp-events';
 	
-	preg_match_all($pattern, $response, $matches, PREG_SET_ORDER);
-	
-	$icons = array();
+	return $args;		
 
-	foreach($matches as $match){
-		$icons[$match[1]] = $match[1];
-	}
-	
-	return $icons;
 }
+add_filter( 'mp_events_post_type_args', 'mp_stacks_eventgrid_mp_events_slug' ); 
