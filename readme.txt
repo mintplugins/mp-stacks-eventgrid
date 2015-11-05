@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.0.0
+Stable tag: 1.0.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,13 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.0.1 = November 4, 2015
+* Font Awesome is now pulled from MP Stacks
+* Added support for "From Scratch" Isotope Filtering behavior
+* Isotope Filter Groups properly set to use mp_calendar taxonomy
+* Override the mp_events "event" rewrite slug so that users can use a page called "events" without a conflict
+* Events per row are now passed through the mp_stacks_grid_posts_per_row_percentage function.
 
 = 1.0.0.0 = September 21, 2015
 * Original release
