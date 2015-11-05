@@ -33,7 +33,7 @@ function mp_eventgrid_event_button($content) {
 	
 	$iframe_url = add_query_arg( array( 'mp_eventgrid_iframe' => true ), $link );
 	
-	$button_html = '<a href="' . $iframe_url . '" class="button mp-stacks-iframe-height-match-lightbox-link">' . __( 'View Full Event Details', 'mp_stacks_eventgrid' ) . '</a>';
+	$button_html = '<p><a href="' . $iframe_url . '" class="button mp-stacks-iframe-height-match-lightbox-link">' . __( 'View Full Event Details', 'mp_stacks_eventgrid' ) . '</a></p>';
 	
   return $button_html . $content;
 }
@@ -82,7 +82,7 @@ function mp_stacks_eventgrid_post_output(){
             <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
             
             <!-- Font Awesome -->  
-            <link href='<?php echo MP_STACKS_EVENTGRID_PLUGIN_URL; ?>includes/fonts/font-awesome-4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
+            <link href='<?php echo MP_STACKS_PLUGIN_URL . 'includes/fonts/font-awesome/css/font-awesome.css?ver=' . MP_STACKS_VERSION ;?>' rel='stylesheet' type='text/css'>
             
 			<!-- Jquery From WordPress -->
 			<script type='text/javascript' src='<?php bloginfo( 'wpurl' ); ?>/wp-includes/js/jquery/jquery.js'></script>

@@ -152,35 +152,60 @@ function mp_stacks_eventgrid_output( $post_id, $loading_more = false, $post_offs
 		
 	}
 	
-	//If there are tax terms selected to show and one of those is "All Events"
-	if ( is_array( $eventgrid_taxonomy_terms ) && !empty( $eventgrid_taxonomy_terms[0]['taxonomy_term'] ) && $eventgrid_taxonomy_terms[0]['taxonomy_term'] == 'all_mp_event' ){
+	//Check the load more behavior to make sure it ins't pagination
+	$load_more_behaviour = mp_core_get_post_meta($post_id, 'eventgrid' . '_load_more_behaviour', 'ajax_load_more' );
+	
+	//If we are loading from scratch based on a user's selection AND we are not using pagination as the "Load More" style (which won't work with this type of filtering)
+	if ( isset( $_POST['mp_stacks_grid_filter_tax'] ) && !empty( $_POST['mp_stacks_grid_filter_tax'] ) && isset( $_POST['mp_stacks_grid_filter_term'] ) && !empty( $_POST['mp_stacks_grid_filter_term'] ) && $load_more_behaviour != 'pagination' ){
+		
+		$user_chosen_tax = $_POST['mp_stacks_grid_filter_tax'];
+		$user_chosen_term = $_POST['mp_stacks_grid_filter_term'];
+		
+		if ( !empty( $user_chosen_tax ) && !empty( $user_chosen_term ) ){
+		
+			//Add the user chosen tax and term as a tax_query to the WP_Query
 			$eventgrid_args['post_type'] = 'mp_event';
-	}
-	//Otherwise, if no "All" has been selected, if there are specific tax terms selected to show
-	else if ( is_array( $eventgrid_taxonomy_terms ) && !empty( $eventgrid_taxonomy_terms[0]['taxonomy_term'] ) ){
-		
-		//Loop through each term the user added to this eventgrid
-		foreach( $eventgrid_taxonomy_terms as $eventgrid_taxonomy_term ){
-		
-			//Show an event category of the users choosing
-			
-			//Explode the term and the tax name apart
-			$taxonomy_explode = explode( '*', $eventgrid_taxonomy_term['taxonomy_term'] );
-			$taxonomy_term_id = isset( $taxonomy_explode[0] ) ? $taxonomy_explode[0] : NULL;
-			$taxonomy_name = isset( $taxonomy_explode[1] ) ? $taxonomy_explode[1] : NULL;
-			
-			//Add the category we want to show to the WP_Query
 			$eventgrid_args['tax_query'][] = array(
-				'taxonomy' => $taxonomy_name,
-				'field'    => 'id',
-				'terms'    => $taxonomy_term_id,
-				'operator' => 'IN'
-			);		
-			
+				'taxonomy' => $user_chosen_tax,
+				'field'    => 'slug',
+				'terms'    => $user_chosen_term,
+			);
+		
 		}
-	}
+					
+	}	
 	else{
-		return false;	
+		//If there are tax terms selected to show and one of those is "All Events"
+		if ( is_array( $eventgrid_taxonomy_terms ) && !empty( $eventgrid_taxonomy_terms[0]['taxonomy_term'] ) && $eventgrid_taxonomy_terms[0]['taxonomy_term'] == 'all_mp_event' ){
+				$eventgrid_args['post_type'] = 'mp_event';
+		}
+		//Otherwise, if no "All" has been selected, if there are specific tax terms selected to show
+		else if ( is_array( $eventgrid_taxonomy_terms ) && !empty( $eventgrid_taxonomy_terms[0]['taxonomy_term'] ) ){
+			
+			//Loop through each term the user added to this eventgrid
+			foreach( $eventgrid_taxonomy_terms as $eventgrid_taxonomy_term ){
+			
+				//Show an event category of the users choosing
+				
+				//Explode the term and the tax name apart
+				$taxonomy_explode = explode( '*', $eventgrid_taxonomy_term['taxonomy_term'] );
+				$taxonomy_term_id = isset( $taxonomy_explode[0] ) ? $taxonomy_explode[0] : NULL;
+				$taxonomy_name = isset( $taxonomy_explode[1] ) ? $taxonomy_explode[1] : NULL;
+				
+				//Add the category we want to show to the WP_Query
+				$eventgrid_args['post_type'] = 'mp_event';
+				$eventgrid_args['tax_query'][] = array(
+					'taxonomy' => $taxonomy_name,
+					'field'    => 'id',
+					'terms'    => $taxonomy_term_id,
+					'operator' => 'IN'
+				);		
+				
+			}
+		}
+		else{
+			return false;	
+		}
 	}
 	
 	//Show Download Images?
@@ -205,7 +230,7 @@ function mp_stacks_eventgrid_output( $post_id, $loading_more = false, $post_offs
 	$eventgrid_output .= !$loading_more ? apply_filters( 'mp_stacks_grid_before', NULL, $post_id, 'eventgrid', $eventgrid_taxonomy_terms ) : NULL; 
 	
 	//Get Download Output
-	$eventgrid_output .= !$loading_more ? '<div class="mp-stacks-grid ' . apply_filters( 'mp_stacks_grid_classes', NULL, $post_id, 'eventgrid' ) . '">' : NULL;
+	$eventgrid_output .= !$loading_more ? '<div class="mp-stacks-grid ' . apply_filters( 'mp_stacks_grid_classes', NULL, $post_id, 'eventgrid' ) . '" ' . apply_filters( 'mp_stacks_grid_attributes', NULL, $post_id, 'eventgrid' ) . '>' : NULL;
 			
 	//Create new query for stacks
 	$eventgrid_query = new WP_Query( apply_filters( 'eventgrid_args', $eventgrid_args ) );
