@@ -41,7 +41,7 @@ function mp_stacks_eventgrid_date_meta_options( $items_array ){
 		'eventgrid_date_format' => array(
 			'field_id'			=> 'eventgrid_date_format',
 			'field_title' 	=> __( 'Date Format', 'mp_stacks_eventgrid'),
-			'field_description' 	=> __( 'Set the date format for your Wordpress by', 'mp_stacks_eventgrid' ) . ' <a href="' .  admin_url( 'options-general.php' ) . '">' . __( 'clicking here', 'mp_stacks_eventgrid' ) . '</a>',
+			'field_description' 	=> __( 'Set the date format for your Wordpress by', 'mp_stacks_eventgrid' ) . ' <a target="_blank" href="' .  admin_url( 'options-general.php' ) . '">' . __( 'clicking here', 'mp_stacks_eventgrid' ) . '</a>',
 			'field_type' 	=> 'basictext',
 			'field_value' => 'true',
 			'field_showhider' => 'eventgrid_date_settings',
