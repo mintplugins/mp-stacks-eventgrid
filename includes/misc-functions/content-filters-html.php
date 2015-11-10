@@ -344,7 +344,7 @@ function mp_stacks_eventgrid_output( $post_id, $loading_more = false, $post_offs
 							$grid_placement_options['mp_event_start_date'] = $mp_event_start_date;
 							$grid_placement_options['mp_event_end_date'] = $mp_event_end_date;
 				
-							$eventgrid_output .= '<a mp_lightbox_alternate_url="' . $lightbox_link . '" href="' . $non_lightbox_link . '" class="' . $lightbox_class . '" ' . $target . ' class="mp-stacks-grid-image-link" title="' . the_title_attribute( 'echo=0' ) . '" alt="' . the_title_attribute( 'echo=0' ) . '">';
+							$eventgrid_output .= '<a mp_lightbox_alternate_url="' . $lightbox_link . '" href="' . $non_lightbox_link . '" ' . $target . ' class="mp-stacks-grid-image-link ' . $lightbox_class . '" title="' . the_title_attribute( 'echo=0' ) . '" alt="' . the_title_attribute( 'echo=0' ) . '">';
 							
 							$eventgrid_output .= '<div class="mp-stacks-grid-item-image-overlay"></div>';
 							

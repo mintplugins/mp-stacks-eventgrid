@@ -360,7 +360,13 @@ function mp_stacks_eventgrid_excerpt_below_over_callback( $eventgrid_output, $gr
 	//If we should show the excerpt below the image
 	if ( strpos( $options['excerpt_placement'], 'below') !== false && $options['excerpt_show']){
 		
-		$excerpt_html_output = '<a href="' . get_permalink() . '" class="mp-stacks-eventgrid-excerpt-link">';	
+		$link = get_permalink();							
+		$lightbox_link = mp_core_add_query_arg( array( 'mp_eventgrid_lightbox' => true ), $link );	
+		$non_lightbox_link = $link;
+		$lightbox_class = 'mp-stacks-iframe-height-match-lightbox-link';
+		$target = 'mfp-width="1290px"';
+							
+		$excerpt_html_output = '<a mp_lightbox_alternate_url="' . $lightbox_link . '" href="' . $non_lightbox_link . '" ' . $target . ' class="mp-stacks-eventgrid-excerpt-link ' . $lightbox_class . '" title="' . the_title_attribute( 'echo=0' ) . '" alt="' . the_title_attribute( 'echo=0' ) . '">';
 			$excerpt_html_output .= mp_stacks_eventgrid_excerpt( $grid_post_id, $options['word_limit'], $options['read_more_text'] );
 		$excerpt_html_output .= '</a>';
 		

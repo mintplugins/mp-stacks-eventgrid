@@ -315,7 +315,13 @@ function mp_stacks_eventgrid_title_below_over_callback( $eventgrid_output, $grid
 	//If we should show the title below the image
 	if ( strpos( $options['title_placement'], 'below') !== false && $options['title_show']){
 		
-		$title_html_output = '<a href="' . get_permalink() . '" class="mp-stacks-eventgrid-title-link">';	
+		$link = get_permalink();							
+		$lightbox_link = mp_core_add_query_arg( array( 'mp_eventgrid_lightbox' => true ), $link );	
+		$non_lightbox_link = $link;
+		$lightbox_class = 'mp-stacks-iframe-height-match-lightbox-link';
+		$target = 'mfp-width="1290px"';
+							
+		$title_html_output = '<a mp_lightbox_alternate_url="' . $lightbox_link . '" href="' . $non_lightbox_link . '" ' . $target . ' class="mp-stacks-eventgrid-title-link ' . $lightbox_class . '" title="' . the_title_attribute( 'echo=0' ) . '" alt="' . the_title_attribute( 'echo=0' ) . '">';
 			$title_html_output .= mp_stacks_eventgrid_title( $grid_post_id );
 		$title_html_output .= '</a>';
 		
