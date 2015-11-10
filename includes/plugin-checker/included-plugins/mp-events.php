@@ -20,7 +20,7 @@
 * @return   array $plugins An array of plugins to be installed. This is passed in through the mp_core_check_plugins filter.
 * @return   array $plugins An array of plugins to be installed. This is passed to the mp_core_check_plugins filter. (see link).
 */
-if (!function_exists('mp_events_plugin_check') && !class_exists( 'Church_Theme_Content' ) ){
+if (!function_exists('mp_events_plugin_check') ){
 	function mp_events_plugin_check( $plugins ) {
 		
 		$add_plugins = array(
