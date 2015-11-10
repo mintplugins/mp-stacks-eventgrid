@@ -745,7 +745,7 @@ function mp_stacks_eventgrid_post_output(){
                     <div class="content-block description selected">
                         
                         <div id="description-container">
-                            <?php echo $post_description; ?>
+                            <?php echo do_shortcode( $post_description ); ?>
                         </div>
                         
                     </div>
@@ -777,7 +777,7 @@ function mp_stacks_eventgrid_post_output(){
                 <?php 
 				
 				//Get the popup Media Content URLs
-                $video_value = mp_core_get_post_meta( $post_id, 'mp_event_video' );
+                $video_value = mp_core_get_post_meta( $post_id, 'event_video' );
 				$featured_image_attachment_id = get_post_thumbnail_id( $post_id );
 				$featured_image_details = wp_get_attachment_image_src( $featured_image_attachment_id, 'full' );
 				$image_value = $featured_image_details[0];
