@@ -12,7 +12,7 @@
  * @package    MP Stacks EventGrid
  * @subpackage Functions
  *
- * @copyright  Copyright (c) 2015, Mint Plugins
+ * @copyright  Copyright (c) 2016, Mint Plugins
  * @license    http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @author     Philip Johnston
  */
@@ -79,6 +79,35 @@ function mp_stacks_eventgrid_date_meta_options( $items_array ){
 			'field_value' => '13',
 			'field_showhider' => 'eventgrid_date_settings',
 		),
+		
+		'eventgrid_date_google_font' => array(
+			'field_id'			=> 'eventgrid_date_google_font',
+			'field_title' 	=> __( 'Google Font Name', 'mp_stacks'),
+			'field_description' 	=> 'Enter the name of the Google Font to use for this Text <br /><a class="button" href="https://www.google.com/fonts" target="_blank">Browse Google Fonts<div  style="margin-top: 3.3px; margin-left: 5px;" class="dashicons dashicons-share-alt2"></div></a>',
+			'field_type' 	=> 'textbox',
+			'field_value' => '',
+			'field_placeholder' => __( 'Google Font Name', 'mp_stacks_googlefonts' ),
+			'field_showhider' => 'eventgrid_date_settings',
+		),
+		'eventgrid_date_google_font_weight_style' => array(
+			'field_id'			=> 'eventgrid_date_google_font_weight_style',
+			'field_title' 	=> __( 'Font Weight/Style', 'mp_stacks'),
+			'field_description' 	=> 'Set the weight of this font (If available for your chosen font)',
+			'field_type' 	=> 'select',
+			'field_select_values' => array( 
+				'100' => 'Thin', 
+				'200' => 'Extra-Light', 
+				'300' => 'Light', 
+				'400' => 'Normal', 
+				'500' => 'Medium', 
+				'600' => 'Semi-Bold', 
+				'700' => 'Bold',
+				'900' => 'Ultra-Bold', 
+			),
+			'field_value' => '',
+			'field_showhider' => 'eventgrid_date_settings',
+		),
+		
 		'eventgrid_date_spacing' => array(
 			'field_id'			=> 'eventgrid_date_spacing',
 			'field_title' 	=> __( 'Dates\' Spacing', 'mp_stacks_eventgrid'),
@@ -224,8 +253,8 @@ add_filter( 'mp_stacks_eventgrid_placement_options', 'mp_stacks_eventgrid_date_p
  *
  * @access   public
  * @since    1.0.0
- * @param    $post_id Int - The ID of the post to get the excerpt of
- * @return   $html_output String - A string holding the html for an excerpt in the grid
+ * @param    $post_id Int - The ID of the post to get the date of
+ * @return   $html_output String - A string holding the html for an date in the grid
  */
 function mp_stacks_eventgrid_date( $post_id, $word_limit, $read_more_text, $mp_event_start_date, $mp_event_end_date ){
 		
@@ -402,3 +431,46 @@ function mp_stacks_eventgrid_date_css( $css_output, $post_id ){
 	return $css_output .= mp_stacks_grid_text_css( $post_id, 'eventgrid_date', 'mp-stacks-eventgrid-item-date', $date_css_defaults );
 }
 add_filter('mp_stacks_eventgrid_css', 'mp_stacks_eventgrid_date_css', 10, 2);
+
+/**
+ * Add the Google Fonts for the Grid Titles
+ *
+ * @param    $css_output          String - The incoming CSS output coming from other things using this filter
+ * @param    $post_id             Int - The post ID of the brick
+ * @param    $first_content_type  String - The first content type chosen for this brick
+ * @param    $second_content_type String - The second content type chosen for this brick
+ * @return   $css_output          String - A string holding the css the brick
+ */
+function mp_stacks_eventgrid_date_google_font( $css_output, $post_id, $first_content_type, $second_content_type ){
+	
+	if ( $first_content_type != 'eventgrid' && $second_content_type != 'eventgrid' ){
+		return $css_output;	
+	}
+	
+	global $mp_stacks_footer_inline_css, $mp_core_font_families;
+	
+	//Default settings for the MP Core Google Font Class
+	$mp_core_google_font_args = array( 'echo_google_font_css' => false, 'wrap_in_style_tags' => false );
+	
+	$eventgrid_date_googlefont = mp_core_get_post_meta( $post_id, 'eventgrid_date_google_font' );
+	$eventgrid_date_googlefontweight = mp_core_get_post_meta( $post_id, 'eventgrid_date_google_font_weight_style' );
+	
+	//If a font name has been entered
+	if ( !empty( $eventgrid_date_googlefont ) ){
+		
+		//Check if a font extra (weight) has been selected and add it if so.
+		$eventgrid_date_googlefontweight = isset($eventgrid_date_googlefontweight) && !empty( $eventgrid_date_googlefontweight ) ? ':' . $eventgrid_date_googlefontweight : NULL;
+		$eventgrid_date_googlefont = $eventgrid_date_googlefont . $eventgrid_date_googlefontweight;
+	
+		//Load the Google Font using the Google Font Class in MP Core
+		new MP_CORE_Font( $eventgrid_date_googlefont, $eventgrid_date_googlefont, $mp_core_google_font_args );
+		$mp_stacks_footer_inline_css[$eventgrid_date_googlefont] = $mp_core_font_families[$eventgrid_date_googlefont];
+		
+		//Return the incoming css string plus css to apply this font family to all paragraph tags
+		$css_output .=  '#mp-brick-' . $post_id . ' .mp-stacks-eventgrid-item-date, #mp-brick-' . $post_id . ' .mp-stacks-eventgrid-item-date * { font-family: \'' . $eventgrid_date_googlefont . '\';}';
+	
+	}
+	
+	return $css_output;	
+}
+add_filter('mp_brick_additional_css', 'mp_stacks_eventgrid_date_google_font', 10, 4);	
