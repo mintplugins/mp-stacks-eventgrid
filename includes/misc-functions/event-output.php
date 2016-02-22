@@ -822,9 +822,9 @@ function mp_stacks_eventgrid_post_output(){
 				elseif( !empty( $image_value ) ){
 										
 					//Only show the featured image if its width is greater than 500px
-					if ( $featured_image_details[1] > 500 ){
+					//if ( $featured_image_details[1] > 500 ){
 						$content_html = '<img src="' . $image_value . '" style="width:100%;"/>';
-					}
+					//}
 				}
 							
 				//If we were able to wrap the content, show it
@@ -846,101 +846,74 @@ function mp_stacks_eventgrid_post_output(){
 						
 						//We resize the comments area on a loop 50 times because the heights are wrong until the content ( IE YouTube Video etc) loads:
 						var content_set_loop_counter = 1;
-						var set_content_size = setInterval( function(){
-														
-							//SIZE LEFT SIDE
+						
+						<?php if ( $media_to_show ){ ?>
 							
-							//Set the width of the left side based on the aspect ratio of its content
-							var left_content_width = $( '#media-side > *' ).css( 'width' ).replace('px', '');
-							var left_content_height = $( '#media-side > *' ).css( 'height' ).replace('px', ''); 
-														
-							//Get the ratio of height - to width
-							var height_ratio = left_content_width / left_content_height;
-							
-							//If the loaded content is wider than it is high
-							if ( height_ratio > 1 ){
-								$( '#media-side' ).css( 'width', '800px' );
-								$( '#media-side *' ).css( 'width', '100%' );
-							}
-							//If the loaded content is higher than it is wide - or a square
-							else if( height_ratio < 1 ){
+							var set_content_size = setInterval( function(){
+															
+								//SIZE LEFT SIDE
 								
-								if( height_ratio < 0.2 ){									
-									$( '#media-side' ).css( 'width', '50px' );
+								//Set the width of the left side based on the aspect ratio of its content
+								var left_content_width = $( '#media-side > *' ).css( 'width' ).replace('px', '');
+								var left_content_height = $( '#media-side > *' ).css( 'height' ).replace('px', ''); 
+															
+								//Get the ratio of height - to width
+								var height_ratio = left_content_width / left_content_height;
+								
+								//If the loaded content is wider than it is high
+								if ( height_ratio > 1 ){
+									$( '#media-side' ).css( 'width', '800px' );
+									$( '#media-side *' ).css( 'width', '100%' );
 								}
-								else if( height_ratio < 0.5 ){									
-									$( '#media-side' ).css( 'width', '300px' );
+								//If the loaded content is higher than it is wide - or a square
+								else if( height_ratio < 1 ){
+									
+									if( height_ratio < 0.2 ){									
+										$( '#media-side' ).css( 'width', '50px' );
+									}
+									else if( height_ratio < 0.5 ){									
+										$( '#media-side' ).css( 'width', '300px' );
+									}
+									else if( height_ratio < 0.8 ){									
+										$( '#media-side' ).css( 'width', '360px' );
+									}
+									else{
+										$( '#media-side' ).css( 'width', '450px' );
+									}
+									
 								}
-								else if( height_ratio < 0.8 ){									
-									$( '#media-side' ).css( 'width', '360px' );
-								}
+								//If the loaded content/image is totally square
 								else{
-									$( '#media-side' ).css( 'width', '450px' );
+									$( '#media-side' ).css( 'width', '571px' );
+								}
+							 
+								//SIZE RIGHT SIDE
+								 
+								//Get the height of the right side
+								var left_side_height = $( '#media-side > *' ).css( 'height' ).replace('px', '');
+								
+								//Get the height of the title block
+								var title_block_height = $( '#title-block' ).css( 'height' ).replace('px', '');
+								var links_block_height = $( '#links-block' ).css( 'height' ).replace('px', '');	
+								var comment_form_container_height = $( '#comment-form-container' ).length > 0 ? $( '#comment-form-container' ).css( 'height' ).replace('px', '') : 0;		
+									
+								//Set the height of the content area by subtracting the height of the title area and the comment form area
+								if ( $( '#comment-form-container' ).length > 0 ){
+									$( '#comments-container' ).css( 'height', left_side_height - title_block_height - comment_form_container_height - links_block_height);
 								}
 								
-							}
-							//If the loaded content/image is totally square
-							else{
-								$( '#media-side' ).css( 'width', '571px' );
-							}
-						 
-							//SIZE RIGHT SIDE
-							 
-							//Get the height of the right side
-							var left_side_height = $( '#media-side > *' ).css( 'height' ).replace('px', '');
-							
-							//Get the height of the title block
-							var title_block_height = $( '#title-block' ).css( 'height' ).replace('px', '');
-							var links_block_height = $( '#links-block' ).css( 'height' ).replace('px', '');	
-							var comment_form_container_height = $( '#comment-form-container' ).length > 0 ? $( '#comment-form-container' ).css( 'height' ).replace('px', '') : 0;		
+								//Set the height of the content area by subtracting the height of the title area and the comment form area
+								$( '#description-container' ).css( 'height', left_side_height - title_block_height - links_block_height );
 								
-							//Set the height of the content area by subtracting the height of the title area and the comment form area
-							if ( $( '#comment-form-container' ).length > 0 ){
-								$( '#comments-container' ).css( 'height', left_side_height - title_block_height - comment_form_container_height - links_block_height);
-							}
-							
-							//Set the height of the content area by subtracting the height of the title area and the comment form area
-							$( '#description-container' ).css( 'height', left_side_height - title_block_height - links_block_height );
-							
-							content_set_loop_counter = content_set_loop_counter + 1;
-	
-							if ( content_set_loop_counter >= 50 ){
-								clearInterval( set_content_size );
-							}
-						}, 100 );
+								content_set_loop_counter = content_set_loop_counter + 1;
+		
+								if ( content_set_loop_counter >= 50 ){
+									clearInterval( set_content_size );
+								}
+							}, 100 );
 						
-						//Load comments upon load of page
-						var postData = {
-							action: 'mp_stacks_eventgrid_load_comments_via_ajax',
-							mp_stacks_eventgrid_post_id: $('#post-id').val(),							
-						}								
+						<?php } ?>
 						
-						//Ajax Load comments upon load of page
-						$.ajax({
-							type: "POST",
-							data: postData,
-							dataType:"html",
-							url: "<?php echo admin_url( 'admin-ajax.php' ); ?>",
-							success: function (response) {
-								
-								$('#comments-container').html( response );
- 
-							}
-						}).fail(function (data) {
-							console.log(data);
-						});	
-						
-						//When the 'Comments' button is clicked
-						$( '#view-comments' ).on( 'click', function( event ){
-							event.preventDefault();
-							$( '#view-comments' ).addClass( 'selected' );
-							$( '.comments' ).addClass( 'selected' );
-							$( '#view-description' ).removeClass( 'selected' );
-							$( '.description' ).removeClass( 'selected' );
-							
-							//Trigger the event which resizes the lightbox to match the height of its content - since the height has now changed
-							parent.mp_stacks_mfp_match_height_trigger();
-						});
 						
 						//When the 'Description' button is clicked
 						$( '#view-description' ).on( 'click', function( event ){
@@ -953,204 +926,7 @@ function mp_stacks_eventgrid_post_output(){
 							//Trigger the event which resizes the lightbox to match the height of its content - since the height has now changed
 							parent.mp_stacks_mfp_match_height_trigger();
 						});
-												
-						//When the 'Post Comment' form is submitted
-						$( '#commentform' ).on( 'submit mp_sg_post_comment_via_ajax', function( event ){
-							event.preventDefault();
-							
-							var comment_form = $(this);
-							
-							// Use ajax to post the comment
-							var postData = {
-								action: 'mp_stacks_eventgrid_comment_via_ajax',
-								mp_stacks_eventgrid_comment_parent_page_url: parent.document.URL,
-								mp_stacks_eventgrid_comment_page_url: document.URL,
-								mp_stacks_eventgrid_post_id: $(this).find('#comment_post_ID').attr( 'value' ),
-								mp_stacks_eventgrid_comment_text: $(this).find('#comment').val(),
-								mp_stacks_eventgrid_comment_service_name: $( '#service-name' ).val(),
-								mp_stacks_eventgrid_unique_id: $( '#unique-id' ).val(),
 								
-							}
-							
-							//Change the message on the Post button to say "...
-							$( '#submit' ).val('...');
-							$( '#comment' ).attr( 'placeholder', '<?php echo __( 'Posting...', 'mp_stacks_eventgrid' ); ?>');
-							//Remove the comment text from the text field
-							comment_form.find( '#comment' ).val('');
-									
-							
-							//Ajax Post Comment
-							$.ajax({
-								type: "POST",
-								data: postData,
-								dataType:"json",
-								url: "<?php echo admin_url( 'admin-ajax.php' ); ?>",
-								success: function (response) {
-									
-									//Reset the value on the submit button
-									$( '#submit' ).val( '<?php echo __( 'Post', 'mp_stacks_eventgrid' ); ?>' );
-								
-									//If we successfully posted a new comments
-									if ( response.successfully_posted_comment ){
-										
-										//Remove the 'No Comments' message - if it exists
-										$('.no-comments').remove();
-										
-										//Scroll the comment area back to the top so the user can see their new comment posted
-										var myDiv = document.getElementById('comments-container');
-										myDiv.scrollTop = 0;
-										
-										//Add the new comment to the top of the current comments
-										$('#comments-container').prepend(response.new_comment);	
-										
-										//Change the placeholder for the comment area to say "Comment Successfully Posted"
-										$( '#comment' ).attr( 'placeholder', '<?php echo __( 'Comment successfully posted!', 'mp_stacks_eventgrid' ); ?>');
-										
-										//Wait for 25 loops before we change the placeholder back to say "Leave Another Comment"
-										var reset_comment_placeholder_interval_counter = 0;
-										var reset_comment_placeholder_interval = setInterval( function(){
-											
-											reset_comment_placeholder_interval_counter = reset_comment_placeholder_interval_counter + 1;
-											
-											if ( reset_comment_placeholder_interval_counter == 25 ){
-												$( '#comment' ).attr( 'placeholder', '<?php echo __( 'Leave another comment...', 'mp_stacks_eventgrid' ); ?>');	
-												clearInterval( reset_comment_placeholder_interval );
-											}
-											
-											
-										}, 100 );
-										
-										//Trigger the event which resizes the lightbox to match the height of its content - since the height has now changed
-										parent.mp_stacks_mfp_match_height_trigger();
-									}
-									//If the user is logged in - but needs to decide if they want to post comments directly to this service (youtube, instagram)
-									else if ( response.log_in_service ){
-										
-										//Show the login box
-										$( '#login-box' ).css( 'display', 'block' );
-										
-										//Make sure the WP Signup is shown as well
-										$( '#login-box #login-box-left-side' ).css( 'display', '' );
-										$( '#login-box #login-box-right-side' ).css( 'width', '50%' );
-										
-										//Show the message to the user
-										$( '#login-box-header-message' ).html( response.header_message );
-										//Show the comment that will be posted when the log in
-										$( '#login-box-header-comment' ).html( '"' + response.comment + '"' );
-										
-										//Ask the user if they want to post their comment to the service in question (youtube instagram etc)
-										$( '#login-box-right-side #log-in-services' ).append( response.log_in_service );
-													
-										
-									}
-									//If the user needs to login to their WP account first
-									else{
-										
-										//Show the login box
-										$( '#login-box' ).css( 'display', 'block' );
-										
-										//Make sure the WP Signup is shown as well
-										$( '#login-box #login-box-left-side' ).css( 'display', '' );
-										$( '#login-box #login-box-right-side' ).css( 'width', '50%' );
-										
-										//Show the message to the user
-										$( '#login-box-header-message' ).html( response.header_message );
-										//Show the comment that will be posted when the log in
-										$( '#login-box-header-comment' ).html( '"' + response.comment + '"' );
-										
-										//Clear out anything that might have previously been places in the list of login links
-										$('#log-in-services-list').html('');
-										
-										//Show the list of links the user can use to log in on the right hand side
-										$.each(response.log_in_services, function() {
-											$.each(this, function(k, v) {
-												$( '#log-in-services-list' ).append( '<li>' + v + '</li>' );
-											});
-										});					
-										
-									}
-									
-								}
-							}).fail(function (data) {
-								console.log(data);
-								comment_form.find( '#comment' ).attr('placeholder', data.responseText);
-								//Reset the value on the submit button
-								$( '#submit' ).val( '<?php echo __( 'Post', 'mp_stacks_eventgrid' ); ?>' );
-							});	
-		
-						});
-						
-						//When the user clicks the "Log In/Sign Up" button to log into WordPress via email
-						$( document ).on( 'submit', '#wp-signin', function(event){
-							
-							event.preventDefault();
-							
-							// Use ajax to log the user into WP
-							var postData = {
-								action: 'mp_stacks_eventgrid_email_log_in_via_ajax',
-								mp_stacks_eventgrid_user_email: $('#email').val(),
-								mp_stacks_eventgrid_user_password: $('#password').val(),		
-								mp_stacks_eventgrid_user_display_name: $('#display-name').val()					
-							}						
-							
-							//Ajax Log User Into WP
-							$.ajax({
-								type: "POST",
-								data: postData,
-								dataType:"json",
-								url: "<?php echo admin_url( 'admin-ajax.php' ); ?>",
-								success: function (response) {
-									
-									//If there was an error passed
-									if ( response.error ){
-										
-										//Let the user know their signup didn't work and to try again
-										$( '#log-in-using-email-title' ).html(response.error_message);
-										$( '#wp-signin-container' ).html(response.login_form_html);
-										
-										//show it in the console
-										console.log( response.error_message );	
-									}	
-									if ( response.user_signup ){
-										$('#login-box-left-side').html( response.user_signup );	
-									}
-									//If we successfully logged the user in, trigger the comment post ajax function
-									if( response.user_signed_in ){
-										
-										//Hide the sign in popup
-										$( '#login-box' ).css( 'display', 'none' );
-										
-										//Trigger the action which posts the comment through ajax
-										$( '#commentform' ).trigger( "mp_sg_post_comment_via_ajax" );	
-										
-									}
-									
-								}
-							}).fail(function (data) {
-								console.log(data);
-							});	
-							
-						});
-												
-						//When the close login-box button is clicked
-						$( '#login-box-close' ).on( 'click', function( event ){
-								
-							event.preventDefault();
-							
-							$( '#login-box' ).css('display', 'none' );	
-								
-						});
-						
-						//If the 'mp-sg-post-comment' is in the url, run the ajax to post the comment because the user was just authenticated and has a comment waiting to be posted
-						if(window.location.href.indexOf("sg-post-comment-via-ajax") > -1) {
-							
-							//Temporarily let the user know their comment is being posted
-							$( '#comment' ).attr('placeholder', '<?php echo __( 'Your comment is being posted...', 'mp_stacks_eventgrid' ); ?>');
-							
-							//Trigger the action which posts the comment through ajax
-							$( '#commentform' ).trigger( "mp_sg_post_comment_via_ajax" );
-							
-						}						
 												
 					});
 					
