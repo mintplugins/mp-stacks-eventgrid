@@ -3,8 +3,8 @@ Contributors: johnstonphilip
 Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
-Tested up to: 4.3
-Stable tag: 1.0.0.2
+Tested up to: 4.4
+Stable tag: 1.0.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,10 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.0.3 = February 21, 2015
+* Fix for images smaller than 500px wide
+* Add Google Font Control for all Grid Text elements.
 
 = 1.0.0.2 = November 10, 2015
 * Do Shortcodes in Event Body in Lightbox Popup.
