@@ -136,6 +136,9 @@ function mp_stacks_eventgrid_post_output(){
 					background-color:#f8f8f8;	
 					position:relative;
 				}
+				#description-container{
+					white-space: pre-line;	
+				}
 				
 				@media (max-width: 900px) {
 					.outer-container{
@@ -173,6 +176,7 @@ function mp_stacks_eventgrid_post_output(){
 						height:auto!important;	
 					}
 					#description-container, #comments-container{
+						white-space: pre-line;	
 						height:auto!important;	
 					}
 				}
@@ -585,7 +589,9 @@ function mp_stacks_eventgrid_post_output(){
 						
 						//Get the title and description of this post
 						$post_title = get_the_title( $post_id );
-						$post_description = get_post_field('post_content', $post_id );
+						
+						$post_object = get_post( $post_id );
+						$post_description = $post_object->post_content;
 						
 					?>
                         	
@@ -744,9 +750,7 @@ function mp_stacks_eventgrid_post_output(){
                     
                     <div class="content-block description selected">
                         
-                        <div id="description-container">
-                            <?php echo do_shortcode( $post_description ); ?>
-                        </div>
+                        <div id="description-container"><?php echo do_shortcode( $post_description ); ?></div>
                         
                     </div>
 					
