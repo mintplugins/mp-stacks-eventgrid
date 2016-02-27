@@ -36,6 +36,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 = 1.0.0.3 = February 21, 2015
 * Fix for images smaller than 500px wide
 * Add Google Font Control for all Grid Text elements.
+* Make Event Descriptions have proper spacing in event lightbox.
 
 = 1.0.0.2 = November 10, 2015
 * Do Shortcodes in Event Body in Lightbox Popup.
