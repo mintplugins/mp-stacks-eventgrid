@@ -31,7 +31,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 function mp_stacks_eventgrid_install() {
-	global $wp_version, $mp_stacks_eventgrid_activation;
+	global $wp_version, $mp_stacks_eventgrid_activation, $wp_rewrite;
+	
+	//Call flush_rules() as a method of the $wp_rewrite object. This will refresh the permalinks.
+	$wp_rewrite->flush_rules();
 	
 	$active_theme = wp_get_theme();
 	
