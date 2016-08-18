@@ -262,7 +262,7 @@ function mp_stacks_eventgrid_output( $post_id, $loading_more = false, $post_offs
 					foreach( $eventgrid_taxonomy_terms as $eventgrid_taxonomy_term ){
 																		
 						//If the current post has this term, make that term one of the classes for the grid item
-						if ( has_term( $eventgrid_taxonomy_term['taxonomy_term'], 'event_category', $grid_post_id ) ){
+						if ( has_term( $eventgrid_taxonomy_term['taxonomy_term'], 'mp_calendars', $grid_post_id ) ){
 							
 							//Store the source this post belongs to
 							$post_source_num = $source_counter;
