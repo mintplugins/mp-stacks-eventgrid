@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.4
-Stable tag: 1.0.0.3
+Stable tag: 1.0.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,11 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.0.4 = August 18, 2015
+* Change taxonomy name to actual taxonomy of mp_calendars in content-filters-html.php. This fixes the wp_list_pluck bug which was introduced because of WordPress 4.6.
+* Removed calls to undefined variable the_start_date_timestamp
+* Flush rewrite rules upon installation
 
 = 1.0.0.3 = February 21, 2015
 * Fix for images smaller than 500px wide

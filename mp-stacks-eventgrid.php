@@ -3,7 +3,7 @@
 Plugin Name: MP Stacks + EventGrid
 Plugin URI: http://mintplugins.com
 Description: Display Events in Grid using MP Stacks.
-Version: 1.0.0.3
+Version: 1.0.0.4
 Author: Mint Plugins
 Author URI: http://mintplugins.com
 Text Domain: mp_stacks_eventgrid
@@ -34,7 +34,7 @@ License: GPL2
 */
 // Plugin version
 if( !defined( 'MP_STACKS_EVENTGRID_VERSION' ) )
-	define( 'MP_STACKS_EVENTGRID_VERSION', '1.0.0.3' );
+	define( 'MP_STACKS_EVENTGRID_VERSION', '1.0.0.4' );
 
 // Plugin Folder URL
 if( !defined( 'MP_STACKS_EVENTGRID_PLUGIN_URL' ) )
