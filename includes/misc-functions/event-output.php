@@ -643,7 +643,7 @@ function mp_stacks_eventgrid_post_output(){
 	
                             ?>		
                             
-                            <time class="timestamp" datetime="<?php echo date( 'c', $the_start_date_timestamp ); ?>">
+                            <time class="timestamp" datetime="<?php echo date( 'c', $the_start_date ); ?>">
                                 
                                 <div class="event-detail-container">
                                 	<div class="event-detail-cell">
