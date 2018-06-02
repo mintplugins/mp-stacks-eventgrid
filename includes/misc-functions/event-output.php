@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * This file contains functions which create output for events regardless of the theme
  *
@@ -21,20 +21,20 @@
  * @return void
  */
 function mp_eventgrid_event_button($content) {
-  	
+
 	//Set up post variables
 	$post_id = get_the_ID();
 	$sg_type = mp_core_get_post_meta( $post_id, 'sg_type' );
 	$sg_author = mp_core_get_post_meta( $post_id, 'sg_author' );
 	$sg_permalink = mp_core_get_post_meta( $post_id, 'sg_permalink' );
 	$sg_unique_id = mp_core_get_post_meta( $post_id, 'sg_unique_id' );
-	
+
 	$link = get_permalink();
-	
+
 	$iframe_url = add_query_arg( array( 'mp_eventgrid_iframe' => true ), $link );
-	
+
 	$button_html = '<p><a href="' . $iframe_url . '" class="button mp-stacks-iframe-height-match-lightbox-link">' . __( 'View Full Event Details', 'mp_stacks_eventgrid' ) . '</a></p>';
-	
+
   return $button_html . $content;
 }
 
@@ -47,26 +47,26 @@ function mp_eventgrid_event_button($content) {
  * @return void
  */
 function mp_stacks_eventgrid_post_output(){
-		
+
 	global $wp_query;
-	
+
 	//If we are not supposed to show an mp_eventgrid_post, get out of here
 	if( !isset( $wp_query->query['post_type'] ) || ( isset( $wp_query->query['post_type'] ) && $wp_query->query['post_type'] != 'mp_event' ) || is_admin() ){
 		return;
 	}
-	
+
 	//If this post is NOT loading in a lightbox/iframe, get out of here. This style is for lightboxes/iframes only.
 	if ( !isset( $_GET['mp_eventgrid_lightbox'] ) && !isset( $_GET['mp_eventgrid_iframe'] ) ){
-		
+
 		add_filter( 'the_content', 'mp_eventgrid_event_button' );
-		
-		return;	
+
+		return;
 	}
-	
-	
+
+
 	//Set up post variables
 	$post_id = get_the_ID();
-							
+
 	?>
     <!DOCTYPE html>
     <html <?php language_attributes(); ?>>
@@ -76,42 +76,42 @@ function mp_stacks_eventgrid_post_output(){
             <title><?php wp_title( '|', true, 'right' ); ?></title>
             <link rel="profile" href="//gmpg.org/xfn/11" />
             <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
-            
+
             <!-- Google Fonts -->
             <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
             <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
-            
-            <!-- Font Awesome -->  
+
+            <!-- Font Awesome -->
             <link href='<?php echo MP_STACKS_PLUGIN_URL . 'includes/fonts/font-awesome/css/font-awesome.css?ver=' . MP_STACKS_VERSION ;?>' rel='stylesheet' type='text/css'>
-            
+
 			<!-- Jquery From WordPress -->
 			<script type='text/javascript' src='<?php bloginfo( 'wpurl' ); ?>/wp-includes/js/jquery/jquery.js'></script>
-                        
+
             <!--[if lt IE 9]>
             <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
             <![endif]-->
-					
+
             <style type="text/css">
-				
+
 				body{
 					font-size: 1.2rem;
-					margin:0px;	
+					margin:0px;
 					font-family: 'Montserrat', 'Helvetica Neue', Arial,Helvetica, sans-serif;
-					background-color:transparent;	
+					background-color:transparent;
 					box-sizing:border-box;
 				}
 				*{
-					box-sizing:border-box;	
+					box-sizing:border-box;
 				}
 				a{
-					color:#3f729b;	
+					color:#3f729b;
 					text-decoration:none;
 				}
 				p{
-					margin:0;	
+					margin:0;
 				}
 				iframe{
-					border: none;	
+					border: none;
 				}
 				.outer-container{
 					display:table;
@@ -133,13 +133,13 @@ function mp_stacks_eventgrid_post_output(){
 				#info-side{
 					display:table-cell;
 					vertical-align: top;
-					background-color:#f8f8f8;	
+					background-color:#f8f8f8;
 					position:relative;
 				}
 				#description-container{
-					white-space: pre-line;	
+					white-space: pre-line;
 				}
-				
+
 				@media (max-width: 900px) {
 					.outer-container{
 						display:inline-block;
@@ -161,10 +161,10 @@ function mp_stacks_eventgrid_post_output(){
 						display:inline-block;
 						width:100%;
 						vertical-align: top;
-						background-color:#f8f8f8;	
+						background-color:#f8f8f8;
 					}
 					.content-block{
-						height:auto!important;	
+						height:auto!important;
 						min-height:100px;
 					}
 					#comment-form-container{
@@ -172,12 +172,12 @@ function mp_stacks_eventgrid_post_output(){
 						top:0;
 					}
 					#comments-container{
-						margin-top:50px!important;	
-						height:auto!important;	
+						margin-top:50px!important;
+						height:auto!important;
 					}
 					#description-container, #comments-container{
-						white-space: pre-line;	
-						height:auto!important;	
+						white-space: pre-line;
+						height:auto!important;
 					}
 				}
 				.white-block{
@@ -191,7 +191,7 @@ function mp_stacks_eventgrid_post_output(){
 				#featured-image *,
 				#title{
 					display:inline-block;
-					vertical-align:middle;	
+					vertical-align:middle;
 					max-height:200px;
 					overflow:hidden;
 				}
@@ -202,10 +202,10 @@ function mp_stacks_eventgrid_post_output(){
 				}
 				.event-detail-cell{
 					display:table-cell;
-					vertical-align:middle;	
+					vertical-align:middle;
 				}
 				.event-detail-icon{
-					padding-right:5px;	
+					padding-right:5px;
 					font-size:25px;
 					line-height:25px;
 					width:25px;
@@ -217,7 +217,7 @@ function mp_stacks_eventgrid_post_output(){
 					padding-top:1px;
 				}
 				.event-detail-icon:before{
-					vertical-align:top;	
+					vertical-align:top;
 				}
 				.event-detail-main{
 					line-height:1.2;
@@ -231,13 +231,13 @@ function mp_stacks_eventgrid_post_output(){
 					color:#81868a;
 					display:block;
 				}
-				
+
 				/* Date Event Details CSS */
 				#date{
-					margin-top:5px;	
+					margin-top:5px;
 				}
 				.end-time-cell{
-					padding-left:20px;	
+					padding-left:20px;
 				}
 				.startdate,
 				.enddate{
@@ -245,33 +245,33 @@ function mp_stacks_eventgrid_post_output(){
 					color:#4e5665;
 					display:block;
 				}
-				
+
 				/* Address Area */
 				#address{
 					margin-top:10px;
 				}
 				.address-marker-icon{
-					margin-right:5px;	
+					margin-right:5px;
 					font-size:13px;
 					line-height:13px;
 					display:inline-block;
 					color:#4e5665;
 					vertical-align:top;
 				}
-				
+
 				/* Views Area Buttons */
 				#views{
-					font-size:65%;	
+					font-size:65%;
 					color:#81868a;
 					display:inline-block;
 				}
 				#view-comments,
 				#view-description{
-					border-right: 1px solid #ddd;	
+					border-right: 1px solid #ddd;
 				}
 				h1.text{
 					font-size:20px;
-					font-family: 'Open Sans', 'Helvetica Neue', Arial,Helvetica, sans-serif;	
+					font-family: 'Open Sans', 'Helvetica Neue', Arial,Helvetica, sans-serif;
 					font-weight:normal;
 					margin:2px 0px 4px 0px;
 				}
@@ -280,9 +280,9 @@ function mp_stacks_eventgrid_post_output(){
 					top:0;
 					right:0;
 					font-size:60%;
-					padding:12px;	
+					padding:12px;
 				}
-				
+
 				/*Links Block */
 				#links-block{
 					font-size:60%;
@@ -295,7 +295,7 @@ function mp_stacks_eventgrid_post_output(){
 					border-bottom: 1px solid #ddd;
 					box-shadow: 0 1px 1px rgba(0,0,0,.06);
 					background-color:#fff;
-					text-align:center;	
+					text-align:center;
 					cursor:pointer;
 					overflow:hidden;
 				}
@@ -305,38 +305,38 @@ function mp_stacks_eventgrid_post_output(){
 					box-shadow: none;
 					box-shadow: inset -1px 0px 0px 0px rgba(0,0,0,.06);
 				}
-				
+
 				/*Content Block - where comments and the description are shown */
 				.content-block{
 					display:none;
-					font-family: 'Open Sans', 'Helvetica Neue', Arial,Helvetica, sans-serif;	
+					font-family: 'Open Sans', 'Helvetica Neue', Arial,Helvetica, sans-serif;
 					font-weight:normal;
 					font-size:0.8rem;
 					position:relative;
 					width:100%;
 				}
 				.content-block.selected{
-					display:inline-block;	
+					display:inline-block;
 					float:left;
 				}
-				
+
 				/*Description Block */
 				#description-container{
 					padding:20px 12px 12px 12px;
-					overflow-y:scroll;	
+					overflow-y:scroll;
 					overflow-x:hidden;
 				}
-				
+
 				/*Comment Block */
 				#comments-container{
 					padding:20px 12px 12px 12px;
-					overflow-y:scroll;	
+					overflow-y:scroll;
 					overflow-x:hidden;
 				}
-				
+
 				/*Comment Block */
 				.comment{
-					margin-bottom:10px;	
+					margin-bottom:10px;
 					display: inline-block;
 					width: 100%;
 				}
@@ -345,7 +345,7 @@ function mp_stacks_eventgrid_post_output(){
 					margin-right:8px;
 				}
 				.comment-avatar img{
-					box-shadow: inset 0 0 0 1px rgba(0,0,0,.3);	
+					box-shadow: inset 0 0 0 1px rgba(0,0,0,.3);
 					float:left;
 				}
 				.comment-info-side-container{
@@ -375,7 +375,7 @@ function mp_stacks_eventgrid_post_output(){
 					height: 0;
 					clear: both;
 				}
-				
+
 				/*Comment Form Container*/
 				#comment-form-container{
 					height:50px;
@@ -400,12 +400,12 @@ function mp_stacks_eventgrid_post_output(){
 					border-radius: 3px;
 					-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 					-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-					box-shadow: inset 0 1px 1px rgba(0,0,0,.05);	
+					box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 					width:84%;
 					float:left;
 				}
 				#submit{
-					width:15%	
+					width:15%
 				}
 				input[type=submit], .button{
 					display:inline-block;
@@ -422,8 +422,8 @@ function mp_stacks_eventgrid_post_output(){
 					border-radius: 3px;
 					-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 					-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-					box-shadow: inset 0 1px 1px rgba(0,0,0,.05);	
-					
+					box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+
 					background-color: #fafafa;
 					background-image: -webkit-gradient(linear,left top,left bottom,from(#fafafa),to(#eee));
 					background-image: -webkit-linear-gradient(top,#fafafa,#eee);
@@ -440,7 +440,7 @@ function mp_stacks_eventgrid_post_output(){
 					position:absolute;
 					background:#fff;
 					padding:20px;
-					color:#000;	
+					color:#000;
 					width:80%;
 					height:80%;
 					top:10%;
@@ -456,7 +456,7 @@ function mp_stacks_eventgrid_post_output(){
 					right:0;
 					top:0;
 					font-size:13px;
-					padding:10px	
+					padding:10px
 				}
 				#login-box-inner-table{
 					display:table;
@@ -465,7 +465,7 @@ function mp_stacks_eventgrid_post_output(){
 				}
 				#login-box-inner-table-cell{
 					display:table-cell;
-					vertical-align:middle;	
+					vertical-align:middle;
 				}
 				#login-box-header{
 					text-align:center;
@@ -478,16 +478,16 @@ function mp_stacks_eventgrid_post_output(){
 				}
 				#login-box-right-side{
 					width: 50%;
-					float: left;	
+					float: left;
 					padding:20px;
 					text-align:center;
 				}
 				#log-in-services-list{
 					list-style: none;
-					padding: 0; 
+					padding: 0;
 				}
 				#log-in-services-list li{
-					margin-bottom:20px;	
+					margin-bottom:20px;
 					font-size: 15px;
 				}
 				input{
@@ -502,28 +502,28 @@ function mp_stacks_eventgrid_post_output(){
 					border-radius: 3px;
 					-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 					-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-					box-shadow: inset 0 1px 1px rgba(0,0,0,.05);	
+					box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 					width:84%;
-					float:left;	
+					float:left;
 				}
 				#log-in-using-email-title, #email, #password, #display-name{
-					margin-bottom:10px;	
+					margin-bottom:10px;
 				}
 				#sign-up{
-					margin-left:0;	
+					margin-left:0;
 					width: inherit;
 				}
 				#mp-core-mobile-back-btn-container{
-					display:none;	
+					display:none;
 				}
 				@media (max-width: 600px) {
 					#mp-core-mobile-back-btn-container{
-						display:block;	
+						display:block;
 					}
 				}
-	
+
 			</style>
-            
+
              <script>
 				function mp_core_go_back() {
 					window.history.back();
@@ -531,118 +531,118 @@ function mp_stacks_eventgrid_post_output(){
 			</script>
 
         </head>
-        
+
         <body>
-        
+
             <div id="mp-core-mobile-back-btn-container" style="background-color:#25272a; color:#fff; width=100%; font-size:45px;">
                 <div id="mp-core-back-btn-icon" onclick="mp_core_go_back()" style="padding:20px 10px 30px 20px; line-height: 1px;">&lsaquo;</div>
-            </div>       
-                         
-            <div class="outer-container">   
-            	
+            </div>
+
+            <div class="outer-container">
+
                 <div id="login-box">
                 	<div id="login-box-close"><?php echo __( 'Close', 'mp_stacks_eventgrid' ); ?></div>
                 	<div id="login-box-inner-table">
                     	<div id="login-box-inner-table-cell">
                             <div id="login-box-header">
-                                
+
                                 <div id="login-box-header-message">
-                                
+
                                 </div>
-                                
+
                                 <div id="login-box-header-comment">
-                                
+
                                 </div>
-                                
+
                             </div>
-                           
+
                             <div id="login-box-left-side">
-                            	
+
                                 <div id="log-in-using-email-title">
                                 	<?php echo __( 'Log In using Email', 'mp_stacks_eventgrid' ); ?>
                                 </div>
-                                
+
                                 <div id="wp-signin-container">
                                 	<?php echo mp_stacks_eventgrid_wp_login_form(); ?>
                             	</div>
-                                
+
                             </div>
-                            
+
                             <div id="login-box-right-side">
-                                
+
                                 <div id="log-in-services">
-                                	
+
                                     <ul id="log-in-services-list">
-                                    
+
                                     </ul>
-                                    
+
                                 </div>
-                                
+
                             </div>
                     	</div>
                     </div>
                 </div>
-                
-                <div id="info-side"> 
-                
-                	<?php 
-						
+
+                <div id="info-side">
+
+                	<?php
+
 						//Get the title and description of this post
 						$post_title = get_the_title( $post_id );
-						
+
 						$post_object = get_post( $post_id );
 						$post_description = $post_object->post_content;
-						
+
 					?>
-                        	
-                
+
+
                     <div id="title-block" class="white-block">
-                    	
+
                         <input id="post-id" type="hidden" value="<?php echo $post_id; ?>" />
-                         
-						<?php 
-						
+
+						<?php
+
 						if ( current_user_can( 'edit_posts' ) ){?>
                         	<div id="edit-post"><a href="<?php echo get_edit_post_link( $post_id ); ?>" target="_blank"><?php echo __( 'Edit this WP Post', 'mp_stacks_eventgrid' ); ?></a></div><?php
 						}
-																		
+
 						?>
-                        
+
                         <div id="featured-image">
                         	<img src="<?php echo mp_core_the_featured_image( $post_id, 50 ); ?>" width="23px" />
                         </div>
-                                                
+
                         <div id="title">
 							<span>
                                 <h1 class="text"><?php echo $post_title; ?></h1>
                             </span>
-                        </div>     
-							
+                        </div>
+
                         <div id="date">
-                        	
-                            <?php //DATE:                            
+
+                            <?php //DATE:
 							//Get the format by which dates and times should be shown based on WP defaults
 							$date_format = get_option( 'date_format' );
 							$time_format = get_option( 'time_format' );
-							
+
 							//Get start DATE info
 							$the_start_date = mp_events_get_mp_event_start_date( $post_id );
 
 							//Get start TIME info
 							$the_start_time = mp_core_get_post_meta( $post_id, 'event_start_time' );
-							
+
 							//Get END date info
 							$the_end_date = mp_events_get_mp_event_end_date( $post_id );
-							
+
 							//Get END Time info
 							$the_end_time = mp_core_get_post_meta( $post_id, 'event_end_time', 'no_time_entered' );
-							
+
 							if ( $the_end_time == 'no_time_entered' ){
 								$the_end_time = NULL;
 							}
-	
-                            ?>		
-                            
+
+                            ?>
+
                             <time class="timestamp" datetime="<?php echo date( 'c', $the_start_date ); ?>">
                                 
                                 <div class="event-detail-container">
@@ -653,11 +653,11 @@ function mp_stacks_eventgrid_post_output(){
                                         <div class="startdate event-detail-main"><?php echo __( 'Starts: ', 'mp_stacks_eventgrid' ) . $the_start_date; ?></div>
                                         <div class="starttime event-detail-sub"><?php echo $the_start_time; ?></div>
                                     </div>
-                                
-                                
+
+
 									<?php //If there is an end date set
                                     if ( !empty( $the_end_date ) ){ ?>
-                                        
+
                                         <div class="event-detail-cell end-time-cell">
                                             <div class="event-detail-icon clock-icon fa-clock-o"></div>
                                         </div>
@@ -667,17 +667,17 @@ function mp_stacks_eventgrid_post_output(){
                                             if ( !empty( $the_end_time ) ){ ?>
                                                 <div class="endtime event-detail-sub"><?php echo $the_end_time; ?></div>
                                             <?php } ?>
-										</div> 
+										</div>
 								    <?php } ?>
                             	</div>
                             </time>
                         </div>
-                        
-                        <?php 
-						
+
+                        <?php
+
 						//Get the Event Address
 						$address = mp_core_get_post_meta( $post_id, 'event_address', 'no_address' );
-						
+
 						//If an Address has been entered, show it here
 						if ( $address != 'no_address' ){ ?>
                             <div id="address">
@@ -687,36 +687,36 @@ function mp_stacks_eventgrid_post_output(){
                                     </div>
                                     <div class="event-detail-cell">
                                         <div class="event-detail-main" itemprop="adr"><?php echo $address; ?></div>
-                                        
-                                        <?php 
+
+                                        <?php
                                         /*
                                         //For now the map is pretty useless and makes it bad UX on small devices. If someone requests it we'll put this back
                                         <div class="event-detail-sub">
                                             <a class="view-map-link" href="https://www.google.com/maps/place/<?php echo str_replace( ' ', '+', trim(preg_replace('/\s+/', ' ', $address ) ) ); ?>" target="_blank"> <?php echo __( 'View Map', 'mp_stacks_eventgrid' ); ?></a>
                                         </div>
-                                        */ 
+                                        */
                                         ?>
-                                        
+
                                     </div>
                                 </div>
                             </div>
-                        <?php } 
-						
+                        <?php }
+
 						//Tickets: If the CTC Plugin is active
 						if ( class_exists( 'Church_Theme_Content' ) ){
-							
+
 							//There is no ticketing information in the CTC plugin
 							$tickets = 'no_ticket_info';
-							
+
 						}
 						//Tickets: If no CTC Plugin, use MP Events
 						else{
-							
+
 							//Get the Event's Ticket Purchase Link
 							$tickets = mp_core_get_post_meta( $post_id, 'event_ticket_url', 'no_ticket_info' );
-							
+
 						}
-						
+
 						//If an Ticket Info has been entered, show it here
 						if ( $tickets != 'no_ticket_info' ){ ?>
                             <div id="tickets">
@@ -732,13 +732,13 @@ function mp_stacks_eventgrid_post_output(){
                         <?php } ?>
                     </div>
                     <div id="links-block">
-                        
+
                         <div id="view-description" class="links-block-item selected">
                              <?php echo __( 'Notes', 'mp_stacks_eventgrid' ); ?>
                         </div>
-                        
-                     
-                        <?php 
+
+
+                        <?php
 						//Check if comments are enabled for this event post.
 						if ( comments_open() ){ ?>
                         <div id="view-comments" class="links-block-item">
@@ -747,22 +747,22 @@ function mp_stacks_eventgrid_post_output(){
                         <?php } ?>
 
                     </div>
-                    
+
                     <div class="content-block description selected">
-                        
+
                         <div id="description-container"><?php echo do_shortcode( $post_description ); ?></div>
-                        
+
                     </div>
-					
-                     <?php 
+
+                     <?php
 					//Check if comments are enabled for this event post.
 					if ( comments_open() ){ ?>
                     <div class="content-block comments">
-                        
+
                         <div id="comments-container">
                             <?php echo __( 'Loading Discusson...', 'mp_stacks_eventgrid' ); ?>
                        </div>
-                        
+
                        <div id="comment-form-container">
                            <form action="<?php bloginfo( 'wpurl' ); ?>/wp-comments-post.php" method="post" id="commentform" class="comment-form">
                                <input type="text" id="comment" name="comment" placeholder="<?php echo __( 'Leave a comment...', 'mp_stacks_eventgrid' ); ?>" aria-required="true"></textarea>
@@ -771,21 +771,21 @@ function mp_stacks_eventgrid_post_output(){
                                <input type="hidden" name="comment_parent" id="comment_parent" value="0">
                            </form>
                        </div>
-                    
+
                     </div>
                     <?php } ?>
-                    
+
                 </div>
-                
-                <div id="media-side"> 
-                <?php 
-				
+
+                <div id="media-side">
+                <?php
+
 				//Get the popup Media Content URLs
                 $video_value = mp_core_get_post_meta( $post_id, 'event_video' );
 				$featured_image_attachment_id = get_post_thumbnail_id( $post_id );
 				$featured_image_details = wp_get_attachment_image_src( $featured_image_attachment_id, 'full' );
 				$image_value = $featured_image_details[0];
-				
+
 				//If a video has been entered
 				if ( !empty( $video_value ) ){
 					//If the video is a youtube video, add custom formatting to the URL
@@ -795,75 +795,75 @@ function mp_stacks_eventgrid_post_output(){
 					}
 					//If this is a vimeo video
 					elseif ( strpos( $video_value, 'vimeo' ) ) {
-						//Get json from vimeo about this video using Curl 
+						//Get json from vimeo about this video using Curl
 						$curl = curl_init('http://vimeo.com/api/oembed.json?url=' . $video_value );
 						curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 						curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 						curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 						$vimeo_info_array = curl_exec($curl);
 						curl_close($curl);
-			
+
 						//Json decode Vimeo info array
 						$vimeo_info_array = json_decode($vimeo_info_array, true);
-						
+
 						$video_id = $vimeo_info_array['video_id'];
-						
+
 						//Create iframe with settings for vimeo
 						$video_value = '//player.vimeo.com/video/' . $video_id . '?portrait=0&badge=0&color=ff9933&autoplay=1';
 					}
-						
+
 					$content_url = $video_value;
-					
+
 					//Attempt to wrap the content in an HTML tag
 					$args = array(
 						'autoplay_videos' => true
 					);
-						
+
 					$content_html = mp_core_wrap_media_url_in_html_tag( $content_url, $args );
-					
+
 				}
 				//If only a featured image exists for content
 				elseif( !empty( $image_value ) ){
-										
+
 					//Only show the featured image if its width is greater than 500px
 					//if ( $featured_image_details[1] > 500 ){
 						$content_html = '<img src="' . $image_value . '" style="width:100%;"/>';
 					//}
 				}
-							
+
 				//If we were able to wrap the content, show it
 				if ( !empty ( $content_html ) && trim( $content_html ) ){
-					
+
 					echo $content_html;
-					
+
 					$media_to_show = true;
-                  
+
                 }else{
-					$media_to_show = false;	
+					$media_to_show = false;
 				}?>
-                
+
                 </div>
-                
+
                 <script type="text/javascript">
-				
+
 					jQuery(document).ready(function($){
-						
+
 						//We resize the comments area on a loop 50 times because the heights are wrong until the content ( IE YouTube Video etc) loads:
 						var content_set_loop_counter = 1;
-						
+
 						<?php if ( $media_to_show ){ ?>
-							
+
 							var set_content_size = setInterval( function(){
-															
+
 								//SIZE LEFT SIDE
-								
+
 								//Set the width of the left side based on the aspect ratio of its content
 								var left_content_width = $( '#media-side > *' ).css( 'width' ).replace('px', '');
-								var left_content_height = $( '#media-side > *' ).css( 'height' ).replace('px', ''); 
-															
+								var left_content_height = $( '#media-side > *' ).css( 'height' ).replace('px', '');
+
 								//Get the ratio of height - to width
 								var height_ratio = left_content_width / left_content_height;
-								
+
 								//If the loaded content is wider than it is high
 								if ( height_ratio > 1 ){
 									$( '#media-side' ).css( 'width', '800px' );
@@ -871,54 +871,54 @@ function mp_stacks_eventgrid_post_output(){
 								}
 								//If the loaded content is higher than it is wide - or a square
 								else if( height_ratio < 1 ){
-									
-									if( height_ratio < 0.2 ){									
+
+									if( height_ratio < 0.2 ){
 										$( '#media-side' ).css( 'width', '50px' );
 									}
-									else if( height_ratio < 0.5 ){									
+									else if( height_ratio < 0.5 ){
 										$( '#media-side' ).css( 'width', '300px' );
 									}
-									else if( height_ratio < 0.8 ){									
+									else if( height_ratio < 0.8 ){
 										$( '#media-side' ).css( 'width', '360px' );
 									}
 									else{
 										$( '#media-side' ).css( 'width', '450px' );
 									}
-									
+
 								}
 								//If the loaded content/image is totally square
 								else{
 									$( '#media-side' ).css( 'width', '571px' );
 								}
-							 
+
 								//SIZE RIGHT SIDE
-								 
+
 								//Get the height of the right side
 								var left_side_height = $( '#media-side > *' ).css( 'height' ).replace('px', '');
-								
+
 								//Get the height of the title block
 								var title_block_height = $( '#title-block' ).css( 'height' ).replace('px', '');
-								var links_block_height = $( '#links-block' ).css( 'height' ).replace('px', '');	
-								var comment_form_container_height = $( '#comment-form-container' ).length > 0 ? $( '#comment-form-container' ).css( 'height' ).replace('px', '') : 0;		
-									
+								var links_block_height = $( '#links-block' ).css( 'height' ).replace('px', '');
+								var comment_form_container_height = $( '#comment-form-container' ).length > 0 ? $( '#comment-form-container' ).css( 'height' ).replace('px', '') : 0;
+
 								//Set the height of the content area by subtracting the height of the title area and the comment form area
 								if ( $( '#comment-form-container' ).length > 0 ){
 									$( '#comments-container' ).css( 'height', left_side_height - title_block_height - comment_form_container_height - links_block_height);
 								}
-								
+
 								//Set the height of the content area by subtracting the height of the title area and the comment form area
 								$( '#description-container' ).css( 'height', left_side_height - title_block_height - links_block_height );
-								
+
 								content_set_loop_counter = content_set_loop_counter + 1;
-		
+
 								if ( content_set_loop_counter >= 50 ){
 									clearInterval( set_content_size );
 								}
 							}, 100 );
-						
+
 						<?php } ?>
-						
-						
+
+
 						//When the 'Description' button is clicked
 						$( '#view-description' ).on( 'click', function( event ){
 							event.preventDefault();
@@ -926,14 +926,14 @@ function mp_stacks_eventgrid_post_output(){
 							$( '.comments' ).removeClass( 'selected' );
 							$( '#view-description' ).addClass( 'selected' );
 							$( '.description' ).addClass( 'selected' );
-							
+
 							//Trigger the event which resizes the lightbox to match the height of its content - since the height has now changed
 							parent.mp_stacks_mfp_match_height_trigger();
 						});
-								
-												
+
+
 					});
-					
+
 					//This function allows us to grab URL variables
 					function mp_stacks_eventgrid_getQueryVariable(variable){
 						   var query = window.location.search.substring(1);
@@ -944,7 +944,7 @@ function mp_stacks_eventgrid_post_output(){
 						   }
 						   return(false);
 					}
-					
+
 					function fnSelect(objId)
 					{
 					fnDeSelect();
@@ -968,12 +968,12 @@ function mp_stacks_eventgrid_post_output(){
 					else if (window.getSelection)
 					window.getSelection().removeAllRanges();
 					}
-				
-				</script>   
+
+				</script>
         </body>
 	</html>
     <?php
-	
+
 	die();
 
 }
@@ -983,23 +983,23 @@ add_action( 'wp', 'mp_stacks_eventgrid_post_output' );
  * This function returns the wp login form for the eventgrid
  *
  * @since    1.0.0
- * @link     
+ * @link
  * @see      function_name()
  * @param    void
  * @return   void
- */ 
+ */
 function mp_stacks_eventgrid_wp_login_form(){
-	
+
 	return '<form id="wp-signin">
-                                
+
 		<input id="email" type="email" placeholder="Your Email Address" />
-		
+
 		<input id="password" type="password" placeholder="Password" />
-		
+
 		<div class="clearedfix"></div>
-		
+
 		<input id="sign-up" type="submit" value="' . __( 'Log In/Sign Up' ) . '" />
-	
+
 	</form>';
-									
+
 }
