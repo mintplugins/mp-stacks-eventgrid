@@ -260,7 +260,7 @@ function mp_stacks_eventgrid_date( $post_id, $word_limit, $read_more_text, $mp_e
 		
 	$the_start_date = mp_events_format_mp_event_date( $mp_event_start_date );
 	$the_start_time = mp_core_get_post_meta( $post_id, 'event_start_time' );
-	$the_start_date_timestamp = strtotime( $the_start_date );
+	$the_start_date_timestamp = strtotime( $mp_event_start_date );
 	$the_start_date = date( get_option( 'date_format' ), $the_start_date_timestamp );
 	$time_description = mp_core_get_post_meta( $post_id, 'event_time_description', $the_start_time );
 	
