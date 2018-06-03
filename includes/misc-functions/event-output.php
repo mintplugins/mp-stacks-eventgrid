@@ -632,7 +632,7 @@ function mp_stacks_eventgrid_post_output(){
 							$the_start_time = mp_core_get_post_meta( $post_id, 'event_start_time' );
 
                             //Get END date info if an and date was entered in the original real event post
-                            if (  mp_core_get_post_meta( $post_id, 'event_end_date', 'no_date_entered' ) ) {
+                            if (  mp_core_get_post_meta( $post_id, 'event_end_date' ) ) {
                                 $the_end_date = mp_events_get_mp_event_end_date( $post_id );
                             } else {
                                 $the_end_date = NULL;
