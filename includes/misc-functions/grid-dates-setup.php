@@ -264,13 +264,14 @@ function mp_stacks_eventgrid_date( $post_id, $word_limit, $read_more_text, $mp_e
 	$the_start_date = date( get_option( 'date_format' ), $the_start_date_timestamp );
 	$time_description = mp_core_get_post_meta( $post_id, 'event_time_description', $the_start_time );
 	
+	$shortMonth = datefmt_format_object(new DateTime($mp_event_start_date), 'MMM', get_locale());
 	//Add the calendar-style date output (fancy)
 	$the_fancy_date = '
 	<div class="mp-stacks-eventgrid-item-date-holder">
 		<div class="mp-stacks-eventgrid-fancy-date">
 			<figure>
 				<header>
-					<span class="mp-stacks-eventgrid-month">' . date( 'M', $the_start_date_timestamp ) . '</span>
+					<span class="mp-stacks-eventgrid-month">' . $shortMonth . '</span>
 					<span class="mp-stacks-eventgrid-year">' . date( 'Y', $the_start_date_timestamp ) . '</span>
 				</header>
 				<section>' . date( 'j', $the_start_date_timestamp ) . '</section>
