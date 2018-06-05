@@ -33,6 +33,10 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.0.6 = June 5, 2018
+* Add filter for translating month name in grid called mp_eventgrid_month_name
+* Fix incorrect if check for showing end date
+
 = 1.0.0.5 = June 2, 2018
 * Only show the end date if one was entered.
 
